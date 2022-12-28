@@ -6,6 +6,23 @@ public class Product {
     private String productName;
     private long price;
     private String category;
+    private int quantity;
+
+    public Product() {
+    }
+
+    public Product(String productName, long price, String category) {
+        this.productName = productName;
+        this.price = price;
+        this.category = category;
+    }
+
+    public Product(String productName, long price, String category, int quantity) {
+        this.productName = productName;
+        this.price = price;
+        this.category = category;
+        this.quantity = quantity;
+    }
 
     public long getId() {
         return id;
@@ -37,6 +54,14 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
