@@ -70,4 +70,33 @@ public class ProductDAO {
         return null;
     }
 
+    public Product updateProduct(Product product) throws SQLException {
+
+        Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet generatedKeys = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("UPDATE public.products SET product_name=?, price=?, category=?, quantity=? WHERE id = " + product.getId());
+
+            preparedStatement.setString(1, product.getProductName());
+            preparedStatement.setLong(2, product.getPrice());
+            preparedStatement.setString(3, product.getCategory());
+            preparedStatement.setInt(4, product.getQuantity());
+
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return product;
+    }
 }

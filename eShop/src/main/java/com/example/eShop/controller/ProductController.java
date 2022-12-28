@@ -18,7 +18,6 @@ public class ProductController {
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public Product createProduct(@RequestBody Product product) throws SQLException {
         ProductDAO productDAO = new ProductDAO();
-
         return productDAO.createProduct(product);
     }
 
@@ -26,6 +25,12 @@ public class ProductController {
     public Product deleteProductById(@RequestParam(value = "id") int id) throws SQLException {
         ProductDAO productDAO = new ProductDAO();
         return productDAO.deleteProduct(id);
+    }
+
+    @RequestMapping(value = "/product", method = RequestMethod.PUT)
+    public Product updateProduct(@RequestBody Product product) throws SQLException {
+        ProductDAO productDAO = new ProductDAO();
+        return productDAO.updateProduct(product);
     }
 
 }
