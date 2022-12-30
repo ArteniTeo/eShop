@@ -10,7 +10,7 @@ import java.sql.*;
 public class OrderItemDAO {
 
 
-    public OrderItem findOIsById(int id) throws SQLException {
+    public OrderItem findOIById(int id) throws SQLException {
 
         OrderItem foundOI = null;
         Connection connection = DataBaseConnection.getConnection();

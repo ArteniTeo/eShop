@@ -17,7 +17,7 @@ public class OrderItemController {
 
     @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.GET)
     public OrderItem getOIById(@RequestParam(value = "id") int id) throws SQLException {
-        return orderItemDAO.findOIsById(id);
+        return orderItemDAO.findOIById(id);
     }
 
     @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.POST)
