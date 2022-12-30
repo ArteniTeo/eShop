@@ -9,25 +9,25 @@ import java.sql.SQLException;
 @RestController
 public class OrderDetailsController {
 
-    @RequestMapping(value = "/shopping_cart", method = RequestMethod.GET)
+    @RequestMapping(value = "/order_details", method = RequestMethod.GET)
     public OrderDetails getODById(@RequestParam(value = "id") int id) throws SQLException {
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
         return orderDetailsDAO.findODById(id);
     }
 
-    @RequestMapping(value = "/shopping_cart", method = RequestMethod.POST)
+    @RequestMapping(value = "/order_details", method = RequestMethod.POST)
     public OrderDetails createOC(@RequestBody OrderDetails OD) throws SQLException {
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
         return orderDetailsDAO.createOD(OD);
     }
 
-    @RequestMapping(value = "/shopping_cart", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/order_details", method = RequestMethod.DELETE)
     public OrderDetails deleteODById(@RequestParam(value = "id") int id) throws SQLException {
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
         return orderDetailsDAO.deleteOD(id);
     }
 
-    @RequestMapping(value = "/shopping_cart", method = RequestMethod.PUT)
+    @RequestMapping(value = "/order_details", method = RequestMethod.PUT)
     public OrderDetails updateOD(@RequestBody OrderDetails OD) throws SQLException {
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
         return orderDetailsDAO.updateOD(OD);
