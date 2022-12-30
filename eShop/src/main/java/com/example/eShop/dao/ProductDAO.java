@@ -28,12 +28,12 @@ public class ProductDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO public.products(product_name, price, category, quantity) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO public.products(product_name, price, category, stock) VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setLong(2, product.getPrice());
             preparedStatement.setString(3, product.getCategory());
-            preparedStatement.setInt(4, product.getQuantity());
+            preparedStatement.setInt(4, product.getStock());
 
             preparedStatement.executeUpdate();
 
@@ -77,12 +77,12 @@ public class ProductDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("UPDATE public.products SET product_name=?, price=?, category=?, quantity=? WHERE id = " + product.getId());
+            preparedStatement = connection.prepareStatement("UPDATE public.products SET product_name=?, price=?, category=?, stock=? WHERE id = " + product.getId());
 
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setLong(2, product.getPrice());
             preparedStatement.setString(3, product.getCategory());
-            preparedStatement.setInt(4, product.getQuantity());
+            preparedStatement.setInt(4, product.getStock());
 
             preparedStatement.executeUpdate();
 
