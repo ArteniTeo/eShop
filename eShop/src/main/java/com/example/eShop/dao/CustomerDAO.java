@@ -2,9 +2,11 @@ package com.example.eShop.dao;
 
 import com.example.eShop.DataBaseConnection;
 import com.example.eShop.entity.Customer;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
+@Repository
 public class CustomerDAO {
 
     public Customer findCustomerById(int id) throws SQLException {

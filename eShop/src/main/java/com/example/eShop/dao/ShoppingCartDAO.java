@@ -2,9 +2,11 @@ package com.example.eShop.dao;
 
 import com.example.eShop.DataBaseConnection;
 import com.example.eShop.entity.ShoppingCart;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
+@Repository
 public class ShoppingCartDAO {
 
     public ShoppingCart findSCById(int id) throws SQLException {
