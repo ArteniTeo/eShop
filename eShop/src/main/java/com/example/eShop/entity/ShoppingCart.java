@@ -9,6 +9,10 @@ public class ShoppingCart {
     public ShoppingCart() {
     }
 
+    public ShoppingCart(long customerId) {
+        this.customerId = customerId;
+    }
+
     public ShoppingCart(long customerId, long totalPrice) {
         this.customerId = customerId;
         this.totalPrice = totalPrice;

@@ -1,20 +1,20 @@
 package com.example.eShop.entity;
 
-public class ShoppingCartProduct {
+public class ShoppingCartItem {
     private long id;
     private long productId;
     private long shoppingCartId;
     private int quantity;
 
-    public ShoppingCartProduct() {
+    public ShoppingCartItem() {
     }
 
-    public ShoppingCartProduct(long productId, long shoppingCartId) {
+    public ShoppingCartItem(long productId, long shoppingCartId) {
         this.productId = productId;
         this.shoppingCartId = shoppingCartId;
     }
 
-    public ShoppingCartProduct(long id, long productId, int quantity) {
+    public ShoppingCartItem(long id, long productId, int quantity) {
         this.id = id;
         this.productId = productId;
         this.quantity = quantity;
