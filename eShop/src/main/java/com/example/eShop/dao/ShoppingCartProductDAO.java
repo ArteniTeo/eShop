@@ -1,42 +1,44 @@
 package com.example.eShop.dao;
 
 import com.example.eShop.DataBaseConnection;
-import com.example.eShop.entity.ShoppingCart;
+import com.example.eShop.entity.ShoppingCartProduct;
 
 import java.sql.*;
 
-public class ShoppingCartDAO {
+public class ShoppingCartProductDAO {
 
-    public ShoppingCart findSCById(int id) throws SQLException {
+    public ShoppingCartProduct findSCPsById(int id) throws SQLException {
 
-        ShoppingCart foundSC = null;
+        ShoppingCartProduct foundSCP = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT customer_id, total_price FROM public.shopping_carts WHERE id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_products WHERE shopping_cart_id = " + id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            foundSC = new ShoppingCart(rs.getLong("customer_id"), rs.getLong("total_price"));
-            foundSC.setId(id);
+            foundSCP = new ShoppingCartProduct(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
+            foundSCP.setId(id);
         }
-        return foundSC;
+        return foundSCP;
     }
 
-    public ShoppingCart createSC(ShoppingCart SC) throws SQLException {
+    public ShoppingCartProduct createSCP(ShoppingCartProduct SCP) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_carts (customer_id) VALUES (?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_cart_products (product_id, shopping_cart_id, quantity) VALUES ( ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setLong(1, SC.getCustomerId());
+            preparedStatement.setLong(1, SCP.getProductId());
+            preparedStatement.setLong(1, SCP.getShoppingCartId());
+            preparedStatement.setLong(1, SCP.getQuantity());
 
             preparedStatement.executeUpdate();
 
             generatedKeys = preparedStatement.getGeneratedKeys();
             generatedKeys.next();
-            SC.setId(generatedKeys.getLong(1));
+            SCP.setId(generatedKeys.getLong(1));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -48,13 +50,13 @@ public class ShoppingCartDAO {
             }
         }
 
-        return SC;
+        return SCP;
     }
 
-    public ShoppingCart deleteSC(long id) throws SQLException {
+    public ShoppingCartProduct deleteSCP(long id) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_carts WHERE id = " + id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_products WHERE id = " + id);
 
         try {
             if (preparedStatement != null) {
@@ -67,16 +69,16 @@ public class ShoppingCartDAO {
         return null;
     }
 
-    public ShoppingCart updateSC(ShoppingCart SC) throws SQLException {
+    public ShoppingCartProduct updateSCP(ShoppingCartProduct SCP) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("UPDATE public.shopping_carts SET total_price=? WHERE customer_id = " + SC.getCustomerId());
+            preparedStatement = connection.prepareStatement("UPDATE public.shopping_cart_products SET quantity=? WHERE id = " + SCP.getId());
 
-            preparedStatement.setLong(1, SC.getTotalPrice());
+            preparedStatement.setLong(1, SCP.getQuantity());
 
             preparedStatement.executeUpdate();
 
@@ -91,7 +93,6 @@ public class ShoppingCartDAO {
             }
         }
 
-        return SC;
+        return SCP;
     }
-
 }

@@ -4,14 +4,14 @@ public class ShoppingCart {
 
     private long id;
     private long customerId;
-    private long total_price;
+    private long totalPrice;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(long customerId, long total_price) {
+    public ShoppingCart(long customerId, long totalPrice) {
         this.customerId = customerId;
-        this.total_price = total_price;
+        this.totalPrice = totalPrice;
     }
 
     public long getId() {
@@ -30,11 +30,11 @@ public class ShoppingCart {
         this.customerId = customerId;
     }
 
-    public long getTotal_price() {
-        return total_price;
+    public long getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotal_price(long total_price) {
-        this.total_price = total_price;
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
