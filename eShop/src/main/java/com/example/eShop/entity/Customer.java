@@ -3,7 +3,7 @@ package com.example.eShop.entity;
 public class Customer {
 
     private long id;
-    private String userName;
+    private String username;
     private String password;
     private String firstName;
     private String lastName;
@@ -11,8 +11,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String userName, String password, String firstName, String lastName) {
-        this.userName = userName;
+    public Customer(String username, String password, String firstName, String lastName) {
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,12 +26,12 @@ public class Customer {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -62,7 +62,7 @@ public class Customer {
     public String toString() {
         return "Customer { " +
                 "id = " + id +
-                " , userName = '" + userName + '\'' +
+                " , username = '" + username + '\'' +
                 " , password = '" + password + '\'' +
                 '}';
     }

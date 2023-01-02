@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
 public class CustomerController {
 
@@ -16,6 +17,11 @@ public class CustomerController {
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
     public Customer getCustomerById(@RequestParam(value = "id") int id) throws SQLException {
         return customerDAO.findCustomerById(id);
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public Customer login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) throws SQLException {
+        return customerDAO.login(username, password);
     }
 
     @RequestMapping(value = "/customer", method = RequestMethod.POST)

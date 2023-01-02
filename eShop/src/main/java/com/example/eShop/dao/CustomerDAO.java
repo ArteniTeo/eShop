@@ -22,7 +22,7 @@ public class CustomerDAO {
             foundCustomer = new Customer();
 
             foundCustomer.setId(id);
-            foundCustomer.setUserName(rs.getString("username"));
+            foundCustomer.setUsername(rs.getString("username"));
             foundCustomer.setPassword(rs.getString("password"));
             foundCustomer.setFirstName(rs.getString("first_name"));
             foundCustomer.setLastName(rs.getString("last_name"));
@@ -40,7 +40,7 @@ public class CustomerDAO {
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO public.customers (username, password, first_name, last_name) VALUES (?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, customer.getUserName());
+            preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getPassword());
             preparedStatement.setString(3, customer.getFirstName());
             preparedStatement.setString(4, customer.getLastName());
@@ -94,7 +94,7 @@ public class CustomerDAO {
         try {
             preparedStatement = connection.prepareStatement("UPDATE public.customers SET username=?, password=?, first_name=?, last_name=? WHERE id = " + customer.getId());
 
-            preparedStatement.setString(1, customer.getUserName());
+            preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getPassword());
             preparedStatement.setString(3, customer.getFirstName());
             preparedStatement.setString(4, customer.getLastName());
@@ -113,6 +113,27 @@ public class CustomerDAO {
         }
 
         return customer;
+    }
+
+    public Customer login(String username, String password) throws SQLException {
+
+        Customer foundCustomer = new Customer();
+        Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT id, first_name, last_name FROM public.customers WHERE username = ? AND password = ?");
+        statement.setString(1, username);
+        statement.setString(2, password);
+        ResultSet rs = statement.executeQuery();
+
+        if (rs.next()) {
+
+            foundCustomer.setId(rs.getLong(("id")));
+            foundCustomer.setUsername(username);
+            foundCustomer.setPassword(password);
+            foundCustomer.setFirstName(rs.getString("first_name"));
+            foundCustomer.setLastName(rs.getString("last_name"));
+
+        }
+        return foundCustomer;
     }
 
 }
