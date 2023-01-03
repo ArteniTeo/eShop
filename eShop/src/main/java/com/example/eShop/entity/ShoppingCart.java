@@ -13,8 +13,8 @@ public class ShoppingCart {
         this.customerId = customerId;
     }
 
-    public ShoppingCart(long customerId, long totalPrice) {
-        this.customerId = customerId;
+    public ShoppingCart(long id, long totalPrice) {
+        this.id = id;
         this.totalPrice = totalPrice;
     }
 

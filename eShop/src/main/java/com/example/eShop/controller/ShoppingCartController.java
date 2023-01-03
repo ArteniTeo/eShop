@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
 public class ShoppingCartController {
 
@@ -15,7 +16,7 @@ public class ShoppingCartController {
 
     @RequestMapping(value = "/shopping_cart", method = RequestMethod.GET)
     public ShoppingCart getSCById(@RequestParam(value = "id") int id) throws SQLException {
-        return shoppingCartDAO.findSCById(id);
+        return shoppingCartDAO.findSCByCustomerId(id);
     }
 
     @RequestMapping(value = "/shopping_cart", method = RequestMethod.POST)

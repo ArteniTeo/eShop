@@ -1,9 +1,7 @@
 package com.example.eShop.dao;
 
 import com.example.eShop.DataBaseConnection;
-import com.example.eShop.controller.ShoppingCartController;
 import com.example.eShop.entity.Customer;
-import com.example.eShop.entity.ShoppingCart;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -53,9 +51,6 @@ public class CustomerDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //Create a new Shopping Cart for every new Customer
-            ShoppingCartController scc = new ShoppingCartController();
-            scc.createSC(new ShoppingCart(customer.getId()));
 
             if (preparedStatement != null) {
                 preparedStatement.close();

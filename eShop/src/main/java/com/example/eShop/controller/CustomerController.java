@@ -24,6 +24,11 @@ public class CustomerController {
         return customerDAO.login(username, password);
     }
 
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public Customer signup(@RequestBody Customer customer) throws SQLException {
+        return customerDAO.createCustomer(customer);
+    }
+
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     public Customer createCustomer(@RequestBody Customer customer) throws SQLException {
         return customerDAO.createCustomer(customer);
