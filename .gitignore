@@ -13,3 +13,4 @@ eShop/target/classes/com/example/eShop/entity/Customer.class
 eShop/target/classes/com/example/eShop/entity/ShoppingCart.class
 eShop/target/classes/com/example/eShop/entity/ShoppingCartProduct.class
 *.class
+*.xml
