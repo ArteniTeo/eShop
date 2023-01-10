@@ -9,16 +9,16 @@ import java.sql.*;
 @Repository
 public class ShoppingCartItemDAO {
 
-    public ShoppingCartItem findSCIsById(int id) throws SQLException {
+    public ShoppingCartItem findSCIsById(int customerId) throws SQLException {
 
         ShoppingCartItem foundSCI = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE shopping_cart_id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE customer_id = " + customerId);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
             foundSCI = new ShoppingCartItem(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
-            foundSCI.setId(id);
+            foundSCI.setCustomerId(customerId);
         }
         return foundSCI;
     }
@@ -30,10 +30,10 @@ public class ShoppingCartItemDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_cart_items (product_id, shopping_cart_id, quantity) VALUES ( ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_cart_items (product_id, customer_id, quantity) VALUES ( ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setLong(1, SCI.getProductId());
-            preparedStatement.setLong(2, SCI.getShoppingCartId());
+            preparedStatement.setLong(2, SCI.getCustomerId());
             preparedStatement.setLong(3, SCI.getQuantity());
 
             preparedStatement.executeUpdate();
