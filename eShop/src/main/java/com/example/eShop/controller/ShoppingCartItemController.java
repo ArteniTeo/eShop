@@ -15,7 +15,7 @@ public class ShoppingCartItemController {
     private ShoppingCartItemDAO shoppingCartItemDAO;
 
     @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.GET)
-    public ShoppingCartItem getSCIById(@RequestParam(value = "id") int id) throws SQLException {
+    public ShoppingCartItem[] getSCIById(@RequestParam(value = "id") int id) throws SQLException {
         return shoppingCartItemDAO.findSCIsByCustomerId(id);
     }
 

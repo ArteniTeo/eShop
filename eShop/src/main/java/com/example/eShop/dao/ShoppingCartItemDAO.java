@@ -9,16 +9,18 @@ import java.sql.*;
 @Repository
 public class ShoppingCartItemDAO {
 
-    public ShoppingCartItem findSCIsByCustomerId(int customer_id) throws SQLException {
+    public ShoppingCartItem[] findSCIsByCustomerId(int customer_id) throws SQLException {
 
-        ShoppingCartItem foundSCI = null;
+        ShoppingCartItem[] foundSCI = new ShoppingCartItem[10];
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE customer_id = " + customer_id);
         ResultSet rs = statement.executeQuery();
 
-        if (rs.next()) {
-            foundSCI = new ShoppingCartItem(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
-            foundSCI.setCustomerId(customer_id);
+        int i = 0;
+        while (rs.next()) {
+            foundSCI[i] = new ShoppingCartItem(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
+            foundSCI[i].setCustomerId(customer_id);
+            i++;
         }
         return foundSCI;
     }
