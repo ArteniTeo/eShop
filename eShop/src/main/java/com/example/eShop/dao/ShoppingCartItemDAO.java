@@ -9,16 +9,28 @@ import java.sql.*;
 @Repository
 public class ShoppingCartItemDAO {
 
+<<<<<<< HEAD
     public ShoppingCartItem findSCIsByCustomerId(int customer_id) throws SQLException {
 
         ShoppingCartItem foundSCI = null;
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE customer_id = " + customer_id);
+=======
+    public ShoppingCartItem findSCIsById(int customerId) throws SQLException {
+
+        ShoppingCartItem foundSCI = null;
+        Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE customer_id = " + customerId);
+>>>>>>> 8306b2476c2c9d8cd2f4f2fd7cce2386f1c26c89
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
             foundSCI = new ShoppingCartItem(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
+<<<<<<< HEAD
             foundSCI.setCustomerId(customer_id);
+=======
+            foundSCI.setCustomerId(customerId);
+>>>>>>> 8306b2476c2c9d8cd2f4f2fd7cce2386f1c26c89
         }
         return foundSCI;
     }
@@ -30,7 +42,7 @@ public class ShoppingCartItemDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_cart_items (product_id, shopping_cart_id, quantity) VALUES ( ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_cart_items (product_id, customer_id, quantity) VALUES ( ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setLong(1, SCI.getProductId());
             preparedStatement.setLong(2, SCI.getCustomerId());
