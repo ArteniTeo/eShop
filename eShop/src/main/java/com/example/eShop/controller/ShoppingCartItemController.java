@@ -10,27 +10,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
+@RestController
 public class ShoppingCartItemController {
 
     @Autowired
     private ShoppingCartItemDAO shoppingCartItemDAO;
 
-    @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.GET)
+    @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.GET)
     public ShoppingCartItem getSCIById(@RequestParam(value = "id") int id) throws SQLException {
         return shoppingCartItemDAO.findSCIsByCustomerId(id);
     }
 
-    @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.POST)
+    @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.POST)
     public ShoppingCartItem createSCI(@RequestBody ShoppingCartItem SCI) throws SQLException {
         return shoppingCartItemDAO.createSCI(SCI);
     }
 
-    @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.DELETE)
     public ShoppingCartItem deleteSCIById(@RequestParam(value = "id") int id) throws SQLException {
         return shoppingCartItemDAO.deleteSCI(id);
     }
 
-    @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.PUT)
+    @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.PUT)
     public ShoppingCartItem updateSCI(@RequestBody ShoppingCartItem SCI) throws SQLException {
         return shoppingCartItemDAO.updateSCI(SCI);
     }

@@ -13,11 +13,11 @@ public class ProductDAO {
 
         Product foundProduct = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT product_name, price, category, quantity FROM public.products WHERE id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT product_name, price, category, stock FROM public.products WHERE id = " + id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            foundProduct = new Product(rs.getString("product_name"), rs.getLong("price"), rs.getString("category"), rs.getInt("quantity"));
+            foundProduct = new Product(rs.getString("product_name"), rs.getLong("price"), rs.getString("category"), rs.getInt("stock"));
             foundProduct.setId(id);
         }
         return foundProduct;
