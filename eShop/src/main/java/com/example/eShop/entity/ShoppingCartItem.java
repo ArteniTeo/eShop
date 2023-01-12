@@ -3,15 +3,15 @@ package com.example.eShop.entity;
 public class ShoppingCartItem {
     private long id;
     private long productId;
-    private long shoppingCartId;
+    private long customerId;
     private int quantity;
 
     public ShoppingCartItem() {
     }
 
-    public ShoppingCartItem(long productId, long shoppingCartId) {
+    public ShoppingCartItem(long productId, long customerId) {
         this.productId = productId;
-        this.shoppingCartId = shoppingCartId;
+        this.customerId = customerId;
     }
 
     public ShoppingCartItem(long id, long productId, int quantity) {
@@ -36,12 +36,12 @@ public class ShoppingCartItem {
         this.productId = productId;
     }
 
-    public long getShoppingCartId() {
-        return shoppingCartId;
+    public long getCustomerId() {
+        return customerId;
     }
 
-    public void setShoppingCartId(long shoppingCartId) {
-        this.shoppingCartId = shoppingCartId;
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
     public int getQuantity() {

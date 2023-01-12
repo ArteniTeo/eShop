@@ -3,7 +3,10 @@ package com.example.eShop.controller;
 import com.example.eShop.dao.ShoppingCartItemDAO;
 import com.example.eShop.entity.ShoppingCartItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 
@@ -14,7 +17,7 @@ public class ShoppingCartItemController {
 
     @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.GET)
     public ShoppingCartItem getSCIById(@RequestParam(value = "id") int id) throws SQLException {
-        return shoppingCartItemDAO.findSCIsById(id);
+        return shoppingCartItemDAO.findSCIsByCustomerId(id);
     }
 
     @RequestMapping(value = "/shopping_cart_product", method = RequestMethod.POST)
