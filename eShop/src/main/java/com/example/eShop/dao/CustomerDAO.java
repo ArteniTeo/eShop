@@ -13,7 +13,8 @@ public class CustomerDAO {
 
         Customer foundCustomer = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT username, password, first_name, last_name FROM public.customers WHERE id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT username, password, first_name, last_name FROM public.customers WHERE id = ?");
+        statement.setInt(1, id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
@@ -67,7 +68,8 @@ public class CustomerDAO {
 
         Customer createdCustomer = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.customers WHERE id = " + id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.customers WHERE id = ?");
+        preparedStatement.setLong(1, id);
 
         try {
             if (preparedStatement != null) {
