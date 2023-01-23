@@ -5,22 +5,24 @@ import com.example.eShop.entity.ShoppingCartItem;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ShoppingCartItemDAO {
 
-    public ShoppingCartItem[] findSCIsByCustomerId(int customer_id) throws SQLException {
+    public List<ShoppingCartItem> findSCIsByCustomerId(int customerId) throws SQLException {
 
-        ShoppingCartItem[] foundSCI = new ShoppingCartItem[10];
+        List<ShoppingCartItem> foundSCI = new ArrayList<>();
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE customer_id = " + customer_id);
+        PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE customer_id = ?");
+        statement.setInt(1, customerId);
         ResultSet rs = statement.executeQuery();
 
-        int i = 0;
         while (rs.next()) {
-            foundSCI[i] = new ShoppingCartItem(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
-            foundSCI[i].setCustomerId(customer_id);
-            i++;
+            ShoppingCartItem cartItem = new ShoppingCartItem(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
+            cartItem.setCustomerId(customerId);
+            foundSCI.add(cartItem);
         }
         return foundSCI;
     }

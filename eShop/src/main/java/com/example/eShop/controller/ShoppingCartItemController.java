@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
@@ -15,7 +16,7 @@ public class ShoppingCartItemController {
     private ShoppingCartItemDAO shoppingCartItemDAO;
 
     @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.GET)
-    public ShoppingCartItem[] getSCIById(@RequestParam(value = "id") int id) throws SQLException {
+    public List<ShoppingCartItem> getSCIById(@RequestParam(value = "id") int id) throws SQLException {
         return shoppingCartItemDAO.findSCIsByCustomerId(id);
     }
 
