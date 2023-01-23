@@ -57,10 +57,10 @@ public class ShoppingCartItemDAO {
         return SCI;
     }
 
-    public ShoppingCartItem deleteSCI(long id) throws SQLException {
+    public ShoppingCartItem deleteSCI(long customer_id) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_items WHERE id = " + id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_items WHERE customer_id = " + customer_id);
 
         try {
             if (preparedStatement != null) {
