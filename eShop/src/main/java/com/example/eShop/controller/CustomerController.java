@@ -35,8 +35,8 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/customer", method = RequestMethod.DELETE)
-    public Customer deleteCustomerById(@RequestParam(value = "id") int id) throws SQLException {
-        return customerDAO.deleteCustomer(id);
+    public void deleteCustomerById(@RequestParam(value = "id") int id) throws SQLException {
+        customerDAO.deleteCustomer(id);
     }
 
     @RequestMapping(value = "/customer", method = RequestMethod.PUT)

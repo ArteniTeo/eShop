@@ -28,6 +28,8 @@ public class CustomerDAO {
 
         }
         return foundCustomer;
+
+        //TODO close all resources (connection and preparedStatement + rs)
     }
 
     public Customer createCustomer(Customer customer) throws SQLException {
@@ -64,22 +66,16 @@ public class CustomerDAO {
         return customer;
     }
 
-    public Customer deleteCustomer(long id) throws SQLException {
+    public void deleteCustomer(long id) throws SQLException {
 
         Customer createdCustomer = null;
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.customers WHERE id = ?");
         preparedStatement.setLong(1, id);
 
-        try {
-            if (preparedStatement != null) {
-                preparedStatement.executeUpdate();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        preparedStatement.executeUpdate();
 
-        return null;
+        //TODO close all resources (connection and preparedStatement)
     }
 
     public Customer updateCustomer(Customer customer) throws SQLException {
