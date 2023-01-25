@@ -9,11 +9,12 @@ import java.sql.*;
 @Repository
 public class OrderDetailsDAO {
 
-    public OrderDetails findODById(int id) throws SQLException {
+    public OrderDetails findODById(long id) throws SQLException {
 
         OrderDetails foundOD = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT customer_id, total_price, payment_id, delivery_address, date FROM public.order_details WHERE id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT customer_id, total_price, payment_id, delivery_address, date FROM public.order_details WHERE id = ?");
+        statement.setLong(1, id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
@@ -60,7 +61,8 @@ public class OrderDetailsDAO {
     public OrderDetails deleteOD(long id) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.order_details WHERE id = " + id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.order_details WHERE id = ?");
+        preparedStatement.setLong(1, id);
 
         try {
             if (preparedStatement != null) {
@@ -80,7 +82,8 @@ public class OrderDetailsDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("UPDATE public.order_details SET customer_id=?, total_price=?, payment_id=?, delivery_address=?, date=? WHERE id = " + OD.getId());
+            preparedStatement = connection.prepareStatement("UPDATE public.order_details SET customer_id=?, total_price=?, payment_id=?, delivery_address=?, date=? WHERE id = ?");
+            preparedStatement.setLong(1, OD.getId());
 
             preparedStatement.setLong(1, OD.getCustomerId());
             preparedStatement.setLong(2, OD.getTotalPrice());

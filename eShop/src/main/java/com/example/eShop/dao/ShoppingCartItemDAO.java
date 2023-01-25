@@ -59,15 +59,14 @@ public class ShoppingCartItemDAO {
         return SCI;
     }
 
-    public ShoppingCartItem deleteSCI(long customer_id) throws SQLException {
+    public ShoppingCartItem deleteSCI(long customerId) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_items WHERE customer_id = " + customer_id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_items WHERE customer_id = ?");
+        preparedStatement.setLong(1, customerId);
 
         try {
-            if (preparedStatement != null) {
-                preparedStatement.executeUpdate();
-            }
+            preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,10 +81,8 @@ public class ShoppingCartItemDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("UPDATE public.shopping_cart_items SET quantity=? WHERE id = " + SCI.getId());
-
-            preparedStatement.setLong(1, SCI.getQuantity());
-
+            preparedStatement = connection.prepareStatement("UPDATE public.shopping_cart_items SET quantity=? WHERE id = ?");
+            preparedStatement.setLong(1, SCI.getId());
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {

@@ -9,11 +9,12 @@ import java.sql.*;
 @Repository
 public class ProductDAO {
 
-    public Product findProductById(int id) throws SQLException {
+    public Product findProductById(long id) throws SQLException {
 
         Product foundProduct = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT product_name, price, category, stock FROM public.products WHERE id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT product_name, price, category, stock FROM public.products WHERE id = ?");
+        statement.setLong(1, id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
@@ -59,12 +60,11 @@ public class ProductDAO {
     public Product deleteProduct(long id) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.products WHERE id = " + id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.products WHERE id = ?");
+        preparedStatement.setLong(1, id);
 
         try {
-            if (preparedStatement != null) {
-                preparedStatement.executeUpdate();
-            }
+            preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,7 +79,8 @@ public class ProductDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("UPDATE public.products SET product_name=?, price=?, category=?, stock=? WHERE id = " + product.getId());
+            preparedStatement = connection.prepareStatement("UPDATE public.products SET product_name=?, price=?, category=?, stock=? WHERE id = ?");
+            preparedStatement.setLong(1, product.getId());
 
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setLong(2, product.getPrice());

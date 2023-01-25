@@ -10,11 +10,12 @@ import java.sql.*;
 public class OrderItemDAO {
 
 
-    public OrderItem findOIById(int id) throws SQLException {
+    public OrderItem findOIById(long id) throws SQLException {
 
         OrderItem foundOI = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT product_id, order_id, product_price, quantity FROM public.order_items WHERE id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT product_id, order_id, product_price, quantity FROM public.order_items WHERE id = ?");
+        statement.setLong(1, id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
@@ -60,7 +61,8 @@ public class OrderItemDAO {
     public OrderItem deleteOI(long id) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.order_items WHERE id = " + id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.order_items WHERE id = ?");
+        preparedStatement.setLong(1, id);
 
         try {
             if (preparedStatement != null) {
@@ -80,7 +82,8 @@ public class OrderItemDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("UPDATE public.order_items SET product_id=?, order_id=?, product_price=?, quantity=? WHERE id = " + OI.getId());
+            preparedStatement = connection.prepareStatement("UPDATE public.order_items SET product_id=?, order_id=?, product_price=?, quantity=? WHERE id = ?");
+            preparedStatement.setLong(1, OI.getId());
 
             preparedStatement.setLong(1, OI.getProductId());
             preparedStatement.setLong(2, OI.getOrderId());

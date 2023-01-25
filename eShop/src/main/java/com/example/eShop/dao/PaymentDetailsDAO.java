@@ -10,11 +10,12 @@ import java.sql.*;
 @Repository
 public class PaymentDetailsDAO {
 
-    public PaymentDetails findPDById(int id) throws SQLException {
+    public PaymentDetails findPDById(long id) throws SQLException {
 
         PaymentDetails foundPD = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT card_owner_name, card_number, card_expiration_date, card_cvv, customer_id FROM public.payment_details WHERE id = " + id);
+        PreparedStatement statement = connection.prepareStatement("SELECT card_owner_name, card_number, card_expiration_date, card_cvv, customer_id FROM public.payment_details WHERE id = ?");
+        statement.setLong(1, id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
@@ -61,12 +62,11 @@ public class PaymentDetailsDAO {
     public PaymentDetails deletePD(long id) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.payment_details WHERE id = " + id);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.payment_details WHERE id = ?");
+        preparedStatement.setLong(1, id);
 
         try {
-            if (preparedStatement != null) {
-                preparedStatement.executeUpdate();
-            }
+            preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +81,8 @@ public class PaymentDetailsDAO {
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("UPDATE public.payment_details SET card_owner_name=?, card_number=?, card_expiration_date=?, card_cvv=?, customer_id=? WHERE id = " + PD.getId());
+            preparedStatement = connection.prepareStatement("UPDATE public.payment_details SET card_owner_name=?, card_number=?, card_expiration_date=?, card_cvv=?, customer_id=? WHERE id = ?");
+            preparedStatement.setLong(1, PD.getId());
 
             preparedStatement.setString(1, PD.getCardOwnerName());
             preparedStatement.setString(2, PD.getCardNumber());

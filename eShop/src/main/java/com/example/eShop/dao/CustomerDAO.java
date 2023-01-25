@@ -9,12 +9,12 @@ import java.sql.*;
 @Repository
 public class CustomerDAO {
 
-    public Customer findCustomerById(int id) throws SQLException {
+    public Customer findCustomerById(long id) throws SQLException {
 
         Customer foundCustomer = null;
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT username, password, first_name, last_name FROM public.customers WHERE id = ?");
-        statement.setInt(1, id);
+        statement.setLong(1, id);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
@@ -75,7 +75,8 @@ public class CustomerDAO {
 
         preparedStatement.executeUpdate();
 
-        //TODO close all resources (connection and preparedStatement)
+        preparedStatement.close();
+        connection.close();
     }
 
     public Customer updateCustomer(Customer customer) throws SQLException {
