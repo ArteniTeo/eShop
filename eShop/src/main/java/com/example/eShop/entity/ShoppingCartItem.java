@@ -3,6 +3,9 @@ package com.example.eShop.entity;
 public class ShoppingCartItem {
     private long id;
     private long productId;
+
+    private String productName;
+    private double price;
     private long customerId;
     private int quantity;
 
@@ -18,6 +21,22 @@ public class ShoppingCartItem {
         this.id = id;
         this.productId = productId;
         this.quantity = quantity;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public long getId() {

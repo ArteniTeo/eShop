@@ -11,16 +11,18 @@ import java.util.List;
 @Repository
 public class ShoppingCartItemDAO {
 
-    public List<ShoppingCartItem> findSCIsByCustomerId(int customerId) throws SQLException {
+    public List<ShoppingCartItem> findSCIsByCustomerId(long customerId) throws SQLException {
 
         List<ShoppingCartItem> foundSCI = new ArrayList<>();
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT id, product_id, quantity FROM public.shopping_cart_items WHERE customer_id = ?");
-        statement.setInt(1, customerId);
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.shopping_cart_items s JOIN public.products p ON s.product_id = p.id Where s.customer_id=?;");
+        statement.setLong(1, customerId);
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {
             ShoppingCartItem cartItem = new ShoppingCartItem(rs.getLong("id"), rs.getLong("product_id"), rs.getInt("quantity"));
+            cartItem.setPrice(rs.getDouble("price"));
+            cartItem.setProductName(rs.getString("product_name"));
             cartItem.setCustomerId(customerId);
             foundSCI.add(cartItem);
         }
