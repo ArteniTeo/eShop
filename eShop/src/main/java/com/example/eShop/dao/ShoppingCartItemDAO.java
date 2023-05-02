@@ -61,11 +61,11 @@ public class ShoppingCartItemDAO {
         return SCI;
     }
 
-    public ShoppingCartItem deleteSCI(long customerId) throws SQLException {
+    public ShoppingCartItem deleteSCI(long sciID) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_items WHERE customer_id = ?");
-        preparedStatement.setLong(1, customerId);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_items WHERE id = ?");
+        preparedStatement.setLong(1, sciID);
 
         try {
             preparedStatement.executeUpdate();
