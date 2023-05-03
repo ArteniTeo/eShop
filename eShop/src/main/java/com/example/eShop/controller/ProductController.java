@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
@@ -14,9 +15,20 @@ public class ProductController {
     @Autowired
     private ProductDAO productDAO;
 
+//    @RequestMapping(value = "/product", method = RequestMethod.GET)
+//    public List<Product> getProductById(@RequestParam(value = "id") long id) throws SQLException {
+//        if(id != 0) return productDAO.findProductById(id);
+//        else return productDAO.getAllProducts();
+//    }
+
     @RequestMapping(value = "/product", method = RequestMethod.GET)
-    public Product getProductById(@RequestParam(value = "id") int id) throws SQLException {
-        return productDAO.findProductById(id);
+    public Product getProductById(@RequestParam(value = "id") long id) throws SQLException {
+         return productDAO.findProductById(id);
+    }
+
+    @RequestMapping(value = "/product-list", method = RequestMethod.GET)
+    public List<Product> getProductList() throws SQLException {
+        return productDAO.getAllProducts();
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)

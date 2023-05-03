@@ -29,23 +29,25 @@ public class ShoppingCartItemDAO {
         return foundSCI;
     }
 
-    public ShoppingCartItem createSCI(ShoppingCartItem SCI) throws SQLException {
+    public ShoppingCartItem createSCI(long productId, long customerId, int quantity) throws SQLException {
 
+        ShoppingCartItem SCI = null;
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet generatedKeys = null;
 
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_cart_items (product_id, shopping_cart_id, quantity) VALUES ( ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO public.shopping_cart_items (product_id, customer_id, quantity) VALUES ( ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setLong(1, SCI.getProductId());
-            preparedStatement.setLong(2, SCI.getCustomerId());
-            preparedStatement.setLong(3, SCI.getQuantity());
+            preparedStatement.setLong(1, productId);
+            preparedStatement.setLong(2, customerId);
+            preparedStatement.setLong(3, quantity);
 
             preparedStatement.executeUpdate();
 
             generatedKeys = preparedStatement.getGeneratedKeys();
             generatedKeys.next();
+            SCI = new ShoppingCartItem(productId, customerId, quantity);
             SCI.setId(generatedKeys.getLong(1));
         } catch (Exception e) {
             e.printStackTrace();

@@ -5,6 +5,8 @@ import com.example.eShop.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ProductDAO {
@@ -22,6 +24,21 @@ public class ProductDAO {
             foundProduct.setId(id);
         }
         return foundProduct;
+    }
+
+    public List<Product> getAllProducts() throws SQLException {
+
+        Product foundProduct = null;
+        List<Product> productList = new ArrayList<>();
+        Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.products");
+        ResultSet rs = statement.executeQuery();
+
+        while (rs.next()) {
+            foundProduct = new Product(rs.getLong("id"), rs.getString("product_name"), rs.getLong("price"), rs.getString("category"), rs.getInt("stock"));
+            productList.add(foundProduct);
+        }
+        return productList;
     }
 
     public Product createProduct(Product product) throws SQLException {

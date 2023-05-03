@@ -21,8 +21,10 @@ public class ShoppingCartItemController {
     }
 
     @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.POST)
-    public ShoppingCartItem createSCI(@RequestBody ShoppingCartItem SCI) throws SQLException {
-        return shoppingCartItemDAO.createSCI(SCI);
+    public ShoppingCartItem createSCI(@RequestParam(value = "productId") int productId,
+                                      @RequestParam(value = "customerId") int customerId,
+                                      @RequestParam(value = "qty") int qty) throws SQLException {
+        return shoppingCartItemDAO.createSCI(productId, customerId, qty);
     }
 
     @RequestMapping(value = "/shopping_cart_item", method = RequestMethod.DELETE)
