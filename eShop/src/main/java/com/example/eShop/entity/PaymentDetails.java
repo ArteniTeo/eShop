@@ -12,6 +12,13 @@ public class PaymentDetails {
     public PaymentDetails() {
     }
 
+    public PaymentDetails(long id, String cardOwnerName, String cardNumber, String cardExpirationDate, int cvv) {
+        this.id = id;
+        this.cardOwnerName = cardOwnerName;
+        this.cardNumber = cardNumber;
+        this.cardExpirationDate = cardExpirationDate;
+        this.cvv = cvv;
+    }
     public PaymentDetails(String cardOwnerName, String cardNumber, String cardExpirationDate, int cvv, long customerId) {
         this.cardOwnerName = cardOwnerName;
         this.cardNumber = cardNumber;

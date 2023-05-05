@@ -10,17 +10,17 @@ import java.sql.*;
 @Repository
 public class PaymentDetailsDAO {
 
-    public PaymentDetails findPDById(long id) throws SQLException {
+    public PaymentDetails findPDById(long customerId) throws SQLException {
 
-        PaymentDetails foundPD = null;
+        PaymentDetails foundPD = new PaymentDetails();
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT card_owner_name, card_number, card_expiration_date, card_cvv, customer_id FROM public.payment_details WHERE id = ?");
-        statement.setLong(1, id);
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.payment_details WHERE customer_id = ?");
+        statement.setLong(1, customerId);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            foundPD = new PaymentDetails(rs.getString("card_owner_name"), rs.getString("card_number"), rs.getString("card_expiration_date"), rs.getInt("cvv"), rs.getLong("customer_id"));
-            foundPD.setId(id);
+            foundPD = new PaymentDetails(rs.getLong("id"), rs.getString("card_owner_name"), rs.getString("card_number"), rs.getString("card_expiration_date"), rs.getInt("card_cvv"));
+            foundPD.setCustomerId(customerId);
         }
         return foundPD;
     }
