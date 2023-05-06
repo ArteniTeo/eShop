@@ -9,17 +9,16 @@ import java.sql.*;
 @Repository
 public class OrderDetailsDAO {
 
-    public OrderDetails findODById(long id) throws SQLException {
+    public OrderDetails findODById(long customerId) throws SQLException {
 
         OrderDetails foundOD = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT customer_id, total_price, payment_id, delivery_address, date FROM public.order_details WHERE id = ?");
-        statement.setLong(1, id);
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.order_details WHERE customer_id = ?");
+        statement.setLong(1, customerId);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            foundOD = new OrderDetails(rs.getLong("customer_id"), rs.getLong("total_price"), rs.getLong("payment_id"), rs.getString("delivery_address"), rs.getDate("date"));
-            foundOD.setId(id);
+            foundOD = new OrderDetails(rs.getLong("id"), rs.getLong("customer_id"), rs.getLong("total_price"), rs.getLong("payment_id"), rs.getString("delivery_address"), rs.getString("date"));
         }
         return foundOD;
     }
@@ -37,7 +36,7 @@ public class OrderDetailsDAO {
             preparedStatement.setLong(2, OD.getTotalPrice());
             preparedStatement.setLong(3, OD.getPaymentId());
             preparedStatement.setString(4, OD.getDeliveryAddress());
-            preparedStatement.setDate(5, OD.getDate());
+            preparedStatement.setString(5, OD.getDate());
 
             preparedStatement.executeUpdate();
 
@@ -89,7 +88,7 @@ public class OrderDetailsDAO {
             preparedStatement.setLong(2, OD.getTotalPrice());
             preparedStatement.setLong(3, OD.getPaymentId());
             preparedStatement.setString(4, OD.getDeliveryAddress());
-            preparedStatement.setDate(5, OD.getDate());
+            preparedStatement.setString(5, OD.getDate());
 
             preparedStatement.executeUpdate();
 

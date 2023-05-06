@@ -7,13 +7,21 @@ public class OrderDetails {
     private long totalPrice;
     private long paymentId;
     private String deliveryAddress;
-    private java.sql.Date date;
+    private String date;
 
 
     public OrderDetails() {
     }
 
-    public OrderDetails(long customerId, long totalPrice, long paymentId, String deliveryAddress, java.sql.Date date) {
+    public OrderDetails(long id, long customerId, long totalPrice, long paymentId, String deliveryAddress, String date) {
+        this.id = id;
+        this.customerId = customerId;
+        this.totalPrice = totalPrice;
+        this.paymentId = paymentId;
+        this.deliveryAddress = deliveryAddress;
+        this.date = date;
+    }
+    public OrderDetails(long customerId, long totalPrice, long paymentId, String deliveryAddress, String date) {
         this.customerId = customerId;
         this.totalPrice = totalPrice;
         this.paymentId = paymentId;
@@ -61,11 +69,11 @@ public class OrderDetails {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public java.sql.Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(java.sql.Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

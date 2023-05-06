@@ -14,7 +14,7 @@ public class OrderDetailsController {
     private OrderDetailsDAO orderDetailsDAO;
 
     @RequestMapping(value = "/order_details", method = RequestMethod.GET)
-    public OrderDetails getODById(@RequestParam(value = "id") int id) throws SQLException {
+    public OrderDetails getODById(@RequestParam(value = "customerId") int id) throws SQLException {
         return orderDetailsDAO.findODById(id);
     }
 
