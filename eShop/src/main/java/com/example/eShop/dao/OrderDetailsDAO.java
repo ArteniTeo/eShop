@@ -5,6 +5,8 @@ import com.example.eShop.entity.OrderDetails;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class OrderDetailsDAO {
@@ -13,7 +15,7 @@ public class OrderDetailsDAO {
 
         OrderDetails foundOD = null;
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.order_details WHERE customer_id = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.order_details WHERE id = ?");
         statement.setLong(1, customerId);
         ResultSet rs = statement.executeQuery();
 
@@ -23,7 +25,23 @@ public class OrderDetailsDAO {
         return foundOD;
     }
 
-    public OrderDetails createOD(OrderDetails OD) throws SQLException {
+    public List <OrderDetails> findODsById(long customerId) throws SQLException {
+
+        OrderDetails foundOD = null;
+        List <OrderDetails> completedOrders = new ArrayList<>();
+        Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.order_details WHERE customer_id = ?");
+        statement.setLong(1, customerId);
+        ResultSet rs = statement.executeQuery();
+
+        while (rs.next()) {
+            foundOD = new OrderDetails(rs.getLong("id"), rs.getLong("customer_id"), rs.getLong("total_price"), rs.getLong("payment_id"), rs.getString("delivery_address"), rs.getString("date"));
+            completedOrders.add(foundOD);
+        }
+        return completedOrders;
+    }
+
+    public OrderDetails createOrderDetails(OrderDetails OD) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();
         PreparedStatement preparedStatement = null;

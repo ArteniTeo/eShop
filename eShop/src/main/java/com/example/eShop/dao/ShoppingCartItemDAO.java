@@ -78,6 +78,21 @@ public class ShoppingCartItemDAO {
         return null;
     }
 
+    public ShoppingCartItem deleteShoppingCartItemByCustomerId(long customerId) throws SQLException {
+
+        Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.shopping_cart_items WHERE customer_id = ?");
+        preparedStatement.setLong(1, customerId);
+
+        try {
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public ShoppingCartItem updateSCI(ShoppingCartItem SCI) throws SQLException {
 
         Connection connection = DataBaseConnection.getConnection();

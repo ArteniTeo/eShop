@@ -3,26 +3,30 @@ package com.example.eShop.dao;
 import com.example.eShop.DataBaseConnection;
 import com.example.eShop.entity.OrderItem;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.ls.LSInput;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class OrderItemDAO {
 
 
-    public OrderItem findOIById(long id) throws SQLException {
+    public List<OrderItem> findOIById(long id) throws SQLException {
 
         OrderItem foundOI = null;
+        List<OrderItem> orderItems = new ArrayList<>();
         Connection connection = DataBaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT product_id, order_id, product_price, quantity FROM public.order_items WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.order_items o JOIN public.products p ON o.product_id = p.id Where o.order_id = ?");
         statement.setLong(1, id);
         ResultSet rs = statement.executeQuery();
 
-        if (rs.next()) {
-            foundOI = new OrderItem(rs.getLong("product_id"), rs.getLong("order_id"), rs.getLong("product_price"), rs.getInt("quantity"));
-            foundOI.setId(id);
+        while (rs.next()) {
+            foundOI = new OrderItem(rs.getLong("id"), rs.getString("product_name"), rs.getLong("product_id"), rs.getLong("order_id"), rs.getLong("product_price"), rs.getInt("quantity"));
+            orderItems.add(foundOI);
         }
-        return foundOI;
+        return orderItems;
     }
 
     public OrderItem createOI(OrderItem OI) throws SQLException {
@@ -56,6 +60,34 @@ public class OrderItemDAO {
         }
 
         return OI;
+    }
+
+    public void createOrderItemsFromShoppingCart(long customerId, long orderId) throws SQLException {
+
+        Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        OrderItem foundOI = null;
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM public.shopping_cart_items sh JOIN public.products p ON sh.product_id = p.id Where sh.customer_id = ?");
+        statement.setLong(1, customerId);
+        ResultSet rs = statement.executeQuery();
+
+        while (rs.next()) {
+            foundOI = new OrderItem(rs.getLong("product_id"), orderId, rs.getLong("price"), rs.getInt("quantity"));
+
+            try {
+                preparedStatement = connection.prepareStatement("INSERT INTO public.order_items (product_id, order_id, product_price, quantity) VALUES (?, ?, ?, ?);");
+
+                preparedStatement.setLong(1, foundOI.getProductId());
+                preparedStatement.setLong(2, foundOI.getOrderId());
+                preparedStatement.setLong(3, foundOI.getProductPrice());
+                preparedStatement.setLong(4, foundOI.getQuantity());
+
+                preparedStatement.executeUpdate();
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+        }
     }
 
     public OrderItem deleteOI(long id) throws SQLException {
