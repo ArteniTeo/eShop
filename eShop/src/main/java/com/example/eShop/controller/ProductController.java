@@ -15,12 +15,6 @@ public class ProductController {
     @Autowired
     private ProductDAO productDAO;
 
-//    @RequestMapping(value = "/product", method = RequestMethod.GET)
-//    public List<Product> getProductById(@RequestParam(value = "id") long id) throws SQLException {
-//        if(id != 0) return productDAO.findProductById(id);
-//        else return productDAO.getAllProducts();
-//    }
-
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     public Product getProductById(@RequestParam(value = "id") long id) throws SQLException {
          return productDAO.findProductById(id);
