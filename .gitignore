@@ -1,3 +1,4 @@
+*.idea
 *.class
 eShop/target/classes/com/example/eShop/controller/CustomerController.class
 eShop/target/classes/com/example/eShop/controller/OrderDetailsController.class
